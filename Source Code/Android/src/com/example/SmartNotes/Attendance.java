@@ -56,7 +56,7 @@ import android.widget.Toast;
 
 public class Attendance extends Activity 
 {
-	public static final String MIME_TEXT_PLAIN = "text/plain";
+    	public static final String MIME_TEXT_PLAIN = "text/plain";
 	//public static final String MIME_BEAM = "application/com.example.SmartNotes";
 	public static final String TAG = "NfcDemo";
 	private EditText mEditText;
@@ -65,30 +65,28 @@ public class Attendance extends Activity
 	private ImageButton goButton;
 	private TextView tv;
 	private HttpPost httppost;
-    private HttpResponse response;
-    private HttpClient httpclient;
-    private HttpEntity entity;
-    private List<NameValuePair> nameValuePairs;
-    private  JSONObject jsonResponse;
-    private ImageButton markButton;
-    private  RadioGroup radioGroup;
-    private  String radioButtonSelected="tag";
-    private  int checkedRadioButton;
+	private HttpResponse response;
+    	private HttpClient httpclient;
+    	private HttpEntity entity;
+    	private List<NameValuePair> nameValuePairs;
+    	private  JSONObject jsonResponse;
+    	private ImageButton markButton;
+    	private  RadioGroup radioGroup;
+    	private  String radioButtonSelected="tag";
+    	private  int checkedRadioButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.attendance);
-		 Intent in = getIntent();
-	     course_code = (String) in.getCharSequenceExtra("code");
-		 tv = (TextView) findViewById(R.id.textView1);
+		Intent in = getIntent();
+		course_code = (String) in.getCharSequenceExtra("code");
+		tv = (TextView) findViewById(R.id.textView1);
 		
 		 mEditText = (EditText) findViewById(R.id.idno);
 		 mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 		 addButtonListener();
-
-		
 
 		if (mNfcAdapter == null) 
 		{
@@ -104,16 +102,18 @@ public class Attendance extends Activity
 		
 		handleIntent(getIntent());
 	}
+
 	public void addButtonListener() {
 		 
 		        goButton = (ImageButton) findViewById(R.id.button1);
 		        markButton = (ImageButton) findViewById(R.id.button3);
 		        markButton.setVisibility(View.GONE);
 		    	markButton.setBackgroundResource(R.drawable.tick);
-		        goButton.setOnClickListener(new OnClickListener() {
+		        goButton.setOnClickListener(new OnClickListener() 
+			{
 		            @Override
-		
-		            public void onClick(View view) {
+		            public void onClick(View view) 
+			    {
 		
 		            	sid =mEditText.getText().toString().trim().toUpperCase();
 		            	if(sid.equals(""))
@@ -129,14 +129,13 @@ public class Attendance extends Activity
 		
 		        });
 		        
-		        markButton.setOnClickListener(new OnClickListener() {
+		        markButton.setOnClickListener(new OnClickListener() 
+		       {
 		            @Override
-		
-		            public void onClick(View view) {
+		            public void onClick(View view) 
+                            {
 		            	markButton.setBackgroundResource(R.drawable.tick_pressed);
-		            	new MarkAttendanceTask().execute();
-		            
-		            
+		            	new MarkAttendanceTask().execute();		           
 		            }
 		
 		        });
@@ -144,101 +143,100 @@ public class Attendance extends Activity
 		        
 		      
 		    }
-	void markAttendance(final int flag)
-    {
-        try{            
-        	  java.util.Date utilDate = new java.util.Date();
-      	    java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+
+	void markAttendance( final int flag )
+        {
+        	try{            
+        	  	java.util.Date utilDate = new java.util.Date();
+      	    		java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
                    	       
-            HttpParams httpParameters = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 3000);
-            HttpConnectionParams.setSoTimeout(httpParameters, 5000);
-            httpclient = new DefaultHttpClient(httpParameters);
-            if(flag == 1)
-            httppost= new HttpPost("http://192.168.11.1/Pervasive_Project/attendance.php/"); 
-            else if(flag==2)
-            	 httppost= new HttpPost("http://192.168.11.1/Pervasive_Project/markattend.php/"); 
+            		HttpParams httpParameters = new BasicHttpParams();
+            		HttpConnectionParams.setConnectionTimeout(httpParameters, 3000);
+            		HttpConnectionParams.setSoTimeout(httpParameters, 5000);
+            		httpclient = new DefaultHttpClient(httpParameters);
+            		if(flag == 1)
+            			httppost= new HttpPost("http://192.168.11.1/Pervasive_Project/attendance.php/"); 
+            		else if(flag==2)
+            	 		httppost= new HttpPost("http://192.168.11.1/Pervasive_Project/markattend.php/"); 
             
-            nameValuePairs = new ArrayList<NameValuePair>(3);
-            nameValuePairs.add(new BasicNameValuePair("sid",sid));  
-            nameValuePairs.add(new BasicNameValuePair("date",sqlDate.toString())); 
-            nameValuePairs.add(new BasicNameValuePair("code",course_code));  
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	            	nameValuePairs = new ArrayList<NameValuePair>(3);
+            		nameValuePairs.add(new BasicNameValuePair("sid",sid));  
+            		nameValuePairs.add(new BasicNameValuePair("date",sqlDate.toString())); 
+            		nameValuePairs.add(new BasicNameValuePair("code",course_code));  
+            		httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
            
-            response=httpclient.execute(httppost);
+            		response=httpclient.execute(httppost);
              
-            if(response.getStatusLine().getStatusCode()== 200)
-            {
-                 entity = response.getEntity();
-                 if(entity != null)
-                 {
-                    InputStream instream = entity.getContent();
-                    jsonResponse = new JSONObject(convertStreamToString(instream));
-                    if(flag == 1)
-                    {
-	                    sname = jsonResponse.getString("sname");
-			            degree = jsonResponse.getString("degree");
-			            image = jsonResponse.getString("image");
+            		if(response.getStatusLine().getStatusCode()== 200)
+            		{
+                 		entity = response.getEntity();
+                 		if(entity != null)
+                 		{
+                    			InputStream instream = entity.getContent();
+                    			jsonResponse = new JSONObject(convertStreamToString(instream));
+                    			if(flag == 1)
+                    			{
+	                    			sname = jsonResponse.getString("sname");
+			            		degree = jsonResponse.getString("degree");
+			            		image = jsonResponse.getString("image");
 			             
-			            runOnUiThread(new Runnable() 
-			            {
-			                 public void run() 
-			                 {
-			                       tv.setText(sname+"\n"+degree+"\n");
-			                       markButton.setVisibility(View.VISIBLE);
-			                       markButton.setBackgroundResource(R.drawable.tick);
-			                  }
-			             });
-			             byte[] image_data = Base64.decode(image, Base64.DEFAULT);
-			                         
-			             ByteArrayInputStream imageStream = new ByteArrayInputStream(image_data);
-			             Bitmap theImage = BitmapFactory.decodeStream(imageStream);
-			             ((ImageView)findViewById(R.id.imageView1)).setImageBitmap(theImage);
-                    }
+			            		runOnUiThread(new Runnable() 
+			            		{
+			                 		public void run() 
+			                 		{
+			                       			tv.setText(sname+"\n"+degree+"\n");
+			                       			markButton.setVisibility(View.VISIBLE);
+			                       			markButton.setBackgroundResource(R.drawable.tick);
+			                  		}
+			             		});
+			             		byte[] image_data = Base64.decode(image, Base64.DEFAULT);
+			                        ByteArrayInputStream imageStream = new ByteArrayInputStream(image_data);
+			             		Bitmap theImage = BitmapFactory.decodeStream(imageStream);
+			             		((ImageView)findViewById(R.id.imageView1)).setImageBitmap(theImage);
+                    			}
                   
-                 }
-            }
+                 		}
+            		}
                                     
+        	} 
+        	catch(ConnectTimeoutException e)
+        	{
+        		showAlertT(); 
+        	}
+        	catch(SocketTimeoutException e)
+        	{
+    			showAlertT(); 
+        	}
+        	catch (ClientProtocolException e) 
+        	{
+    			showAlertT(); 
+        	}
+         	catch (JSONException e) 
+        	{ 
+        	   Attendance.this.runOnUiThread(new Runnable()
+                   {
+                    	public void run() 
+                    	{
+                   		tv.setText("No such record found");
+                     		markButton.setVisibility(View.GONE);
+                    	}
+                   });      	
+           	
+        	  Attendance.this.runOnUiThread(new Runnable()
+                  {
+                    	public void run() 
+                    	{
+                    		((ImageView)findViewById(R.id.imageView1)).setImageDrawable(null);
+                    	}
+                   });      		
+           	  return;
         } 
-        catch(ConnectTimeoutException e)
-        {
-        	showAlertT(); 
-        }
-        catch(SocketTimeoutException e)
-        {
-    		showAlertT(); 
-        }
-        catch (ClientProtocolException e) 
-        {
-    		showAlertT(); 
-        }
-         catch (JSONException e) 
-        {
-        	 
-        	    Attendance.this.runOnUiThread(new Runnable()
-                {
-                    public void run() 
-                    {
-                   	 tv.setText("No such record found");
-                     markButton.setVisibility(View.GONE);
-                    }
-                });      	
-           	
-        	    Attendance.this.runOnUiThread(new Runnable()
-                {
-                    public void run() 
-                    {
-                    	 ((ImageView)findViewById(R.id.imageView1)).setImageDrawable(null);
-                    }
-                });      	
-           	
-           	
-           return;
-        } 
-        catch (IOException e) {
+        catch (IOException e) 
+	{
         	e.printStackTrace();
-		}
-        catch (Exception e){
+	}
+        catch (Exception e)
+	{
         	e.printStackTrace();
         }
        
@@ -246,7 +244,7 @@ public class Attendance extends Activity
 	
 	
 	 private static String convertStreamToString(InputStream is) 
-	    {
+	 {
 	        /*
 	         * To convert the InputStream to String we use the BufferedReader.readLine()
 	         * method. We iterate until the BufferedReader return null which means
@@ -258,15 +256,23 @@ public class Attendance extends Activity
 
 	        String line = null;
 	        try {
-	            while ((line = reader.readLine()) != null) {
+	            while ((line = reader.readLine()) != null) 
+		    {
 	                sb.append(line + "\n");
 	            }
-	        } catch (IOException e) {
+	        } 
+		catch (IOException e) 
+		{
 	            e.printStackTrace();
-	        } finally {
-	            try {
+	        } 
+		finally 
+		{
+	            try 
+		    {
 	                is.close();
-	            } catch (IOException e) {
+	            } 
+		    catch (IOException e) 
+		    {
 	                e.printStackTrace();
 	            }
 	        }
