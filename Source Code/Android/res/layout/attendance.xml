@@ -1,0 +1,99 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="left"
+    tools:context=".MainActivity" >
+
+    <com.example.SmartNotes.MyEditText
+        android:id="@+id/idno"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="Enter BITS id (eg:2010A1PS123G)"
+        android:maxLength="12"
+        android:singleLine="true" >
+
+        <requestFocus />
+    </com.example.SmartNotes.MyEditText>
+
+    <ImageButton
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       
+        android:layout_marginLeft="310dp"
+          android:layout_marginTop="32dp"
+            android:layout_marginRight="10dp"
+       
+        android:background="@android:color/black"
+        android:src="@drawable/play" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="20dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="21dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="200dp"
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/idno"
+        android:layout_marginTop="79dp"
+        android:gravity="center"
+        android:lines="3"
+        android:maxLines="3"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageButton
+        android:id="@+id/button3"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/black" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+             android:layout_marginLeft="25dp"
+            android:layout_height="wrap_content"
+          
+            android:layout_below="@+id/idno"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio0"
+                style="@style/CText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_alignTop="@+id/imageView1"
+                android:checked="true"
+                android:text="NFC Tag" />
+
+            <RadioButton
+                android:id="@+id/radio1"
+                style="@style/CText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Android Beam" />
+        </RadioGroup>
+        
+</RelativeLayout>
